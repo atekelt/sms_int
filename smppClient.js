@@ -3,7 +3,7 @@ require('dotenv').config();
 let session;
 
 const connect = () => {
-  session = new smpp.Session({host: process.env.HOST, port: process.env.PORT});
+  session = new smpp.Session({host: process.env.HOST, port: process.env.SMS_PORT});
 
   session.on('connect', () => {
     session.bind_transceiver({

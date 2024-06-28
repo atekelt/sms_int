@@ -1,42 +1,7 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const smppClient = require('./smppClient');
+const app = require('./api');
 
-const app = express();
-app.use(bodyParser.json());
+const PORT = process.env.SRV_PORT || 3000;
 
-smppClient.connect();
-
-app.get('/', (req,res) => {
-    res.send("SMS Integration Server");
-  });
-
-app.post('/subscribe', (req, res) => {
-  const { userID, spID, productID, serviceID } = req.body;
-
-  const message = `Subscription request: UserID=${userID}, SPID=${spID}, ProductID=${productID}, ServiceID=${serviceID}`;
-
-  smppClient.sendSMS(userID, message, (err, pdu) => {
-    if (err) {
-      res.status(500).json({ error: err.message });
-    } else {
-      res.status(200).json({ message: 'Subscription message sent', pdu });
-    }
-  });
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
-
-app.post('/unsubscribe', (req, res) => {
-  const { userID, spID, productID, serviceID } = req.body;
-
-  const message = `Unsubscription request: UserID=${userID}, SPID=${spID}, ProductID=${productID}, ServiceID=${serviceID}`;
-
-  smppClient.sendSMS(userID, message, (err, pdu) => {
-    if (err) {
-      res.status(500).json({ error: err.message });
-    } else {
-      res.status(200).json({ message: 'Unsubscription message sent', pdu });
-    }
-  });
-});
-
-module.exports = app;
