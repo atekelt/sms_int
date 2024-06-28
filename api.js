@@ -12,9 +12,9 @@ app.get('/', (req,res) => {
   });
 
 app.post('/subscribe', (req, res) => {
-  const { userID, spID, productID, serviceID } = req.body;
+  const { userID, spID, productID, serviceNumber } = req.body;
 
-  const message = `Subscription request: UserID=${userID}, SPID=${spID}, ProductID=${productID}, ServiceID=${serviceID}`;
+  const message = `Subscription request: UserID=${userID}, SPID=${spID}, ProductID=${productID}, serviceNumber=${serviceNumber}`;
 
   smppClient.sendSMS(userID, message, (err, pdu) => {
     if (err) {
@@ -26,9 +26,9 @@ app.post('/subscribe', (req, res) => {
 });
 
 app.post('/unsubscribe', (req, res) => {
-  const { userID, spID, productID, serviceID } = req.body;
+  const { userID, spID, productID, serviceNumber } = req.body;
 
-  const message = `Unsubscription request: UserID=${userID}, SPID=${spID}, ProductID=${productID}, ServiceID=${serviceID}`;
+  const message = `Unsubscription request: UserID=${userID}, SPID=${spID}, ProductID=${productID}, serviceNumber=${serviceNumber}`;
 
   smppClient.sendSMS(userID, message, (err, pdu) => {
     if (err) {
