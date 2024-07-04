@@ -8,7 +8,7 @@ const connect = () => {
   session.on('connect', () => {
     session.bind_transceiver({
       system_id: process.env.USER,
-      password: process.env.PASS
+      password: "Dis#6838"
     }, (pdu) => {
       if (pdu.command_status === 0) {
         console.log('Successfully bound to SMPP server');
