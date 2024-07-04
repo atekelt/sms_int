@@ -7,7 +7,7 @@ const connect = () => {
 
   session.on('connect', () => {
     session.bind_transceiver({
-      system_id: process.env.USER,
+      system_id: '300120',
       password: 'Dis#6838',
     }, (pdu) => {
       if (pdu.command_status === 0) {
@@ -31,6 +31,8 @@ const sendSMS = (phoneNumber, message, callback) => {
     return;
   }
 
+console.log(`Sending SMS to ${phoneNumber}: ${message}`);
+
   session.submit_sm({
     destination_addr: phoneNumber,
     short_message: message
@@ -40,7 +42,7 @@ const sendSMS = (phoneNumber, message, callback) => {
       callback(null, pdu);
     } else {
       console.error('Failed to send message:', pdu);
-      callback(new Error('Failed to send message'));
+      callback(new Error(`Failed to send message. Status: ${pdu.command_status}`));
     }
   });
 };
